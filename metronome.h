@@ -20,11 +20,11 @@ uint16_t bpm; // range 1 - 300
 
 byte subdiv; // beat subdivisions
 #define SUBDIV_MIN 1 // generally a quarter note
-#define SUBDIV_MAX 4 // i.e. 16th
+#define SUBDIV_MAX 16
 
 byte meas_len; // beats per measure
 #define MEAS_LEN_MIN 1
-#define MEAS_LEN_MAX 12
+#define MEAS_LEN_MAX 16
 
 byte measures; // measures per pattern
 #define MEASURES_MIN 1
