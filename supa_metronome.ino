@@ -43,20 +43,20 @@ void loop() {
   case 0: // bpm
     action = adjust_int("bpm", &bpm, 300, 1, ARCADA_WHITE, ARCADA_BLUE, &first_run, &update);
     break;
-  case 1: // subdiv
+  case 1: // pattern
+    action = edit_pattern(&first_run, &update);
+    break;
+  case 2: // subdiv
     action = adjust_int("subdivisions", &subdiv, SUBDIV_MAX, SUBDIV_MIN, ARCADA_WHITE, ARCADA_PURPLE, &first_run, &update);
     if (update) set_pattern_length();
     break;
-  case 2: // meas_len
-    action = adjust_int("meas. length", &meas_len, MEAS_LEN_MAX, MEAS_LEN_MIN, ARCADA_WHITE, ARCADA_PURPLE, &first_run, &update);
+  case 3: // meas_len
+    action = adjust_int("measure length", &meas_len, MEAS_LEN_MAX, MEAS_LEN_MIN, ARCADA_WHITE, ARCADA_PURPLE, &first_run, &update);
     if (update) set_pattern_length();
     break;
-  case 3: // measures
+  case 4: // measures
     action = adjust_int("measures", &measures, MEASURES_MAX, MEASURES_MIN, ARCADA_WHITE, ARCADA_PURPLE, &first_run, &update);
     if (update) set_pattern_length();
-    break;
-  case 4: // pattern
-    action = edit_pattern(&first_run, &update);
     break;
   case 5: // precount
     action = toggle_precount(ARCADA_WHITE, ARCADA_RED, &first_run, &update);
