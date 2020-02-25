@@ -171,7 +171,7 @@ uint8_t toggle_precount(const uint16_t fg, const uint16_t bg,
     arcada.display->setTextColor(fg);
 
     center_print_string("count in", ARCADA_TFT_WIDTH / 2, (ARCADA_TFT_HEIGHT / 8) * 3, title_font);
-    center_print_string(String(precount_enabled ? "ON" : "OFF"), ARCADA_TFT_WIDTH / 2, (ARCADA_TFT_HEIGHT / 8) * 7, number_font);
+    center_print_string(String(precount_enabled ? "on" : "off"), ARCADA_TFT_WIDTH / 2, (ARCADA_TFT_HEIGHT / 8) * 7, number_font);
     *first_run = false;
   }
   
@@ -184,7 +184,7 @@ uint8_t toggle_precount(const uint16_t fg, const uint16_t bg,
     
   if (*update) {
     arcada.display->fillRect(0, ARCADA_TFT_HEIGHT / 2, ARCADA_TFT_WIDTH, ARCADA_TFT_HEIGHT / 2, bg);
-    center_print_string(String(precount_enabled ? "ON" : "OFF"), ARCADA_TFT_WIDTH / 2, (ARCADA_TFT_HEIGHT / 8) * 7, number_font);
+    center_print_string(String(precount_enabled ? "on" : "off"), ARCADA_TFT_WIDTH / 2, (ARCADA_TFT_HEIGHT / 8) * 7, number_font);
   }
   
   return pressed_buttons;
