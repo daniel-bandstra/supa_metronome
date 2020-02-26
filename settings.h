@@ -96,16 +96,17 @@ bool save_settings_maybe() {
   static nframes_t next_time = frames;
   nframes_t now = frames;
 
-  if (now <= next_time)
-    return false;
+  if (now > next_time && !arcada.readButtons()) {
+    for (byte i = 1; i < CLICKS_BUF_LEN; i++)
+      if (clicks[i] && now + SAVE_DELAY + SPEAKER_RAMP_UP >= clicks[i])
+	return false;
   
-  for (byte i = 1; i < CLICKS_BUF_LEN; i++)
-    if (clicks[i] && now + SAVE_DELAY + SPEAKER_RAMP_UP >= clicks[i])
-      return false;
+    save_settings();
+    next_time = now + SAVE_RATE;
+    return true;
+  }
   
-  save_settings();
-  next_time = now + SAVE_RATE;
-  return true;
+  return false;
 }
 
 #endif

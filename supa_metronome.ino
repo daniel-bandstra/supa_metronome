@@ -133,11 +133,8 @@ void loop() {
     changed = true;
   }
   
-  if (changed && !action) { // autosave
-    if (save_settings_maybe()) {
-      changed = false;
-    }
-  }
+  if (changed) // autosave
+    changed = !save_settings_maybe();
   
   metronome();
   screensaver();
