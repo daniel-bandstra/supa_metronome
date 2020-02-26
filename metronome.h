@@ -134,11 +134,9 @@ void play_click() {
 
 // Metronome
 
-nframes_t get_interval() {
-  nframes_t new_interval = (pdmspi.sampleRate * 60.0) / ((uint16_t)bpm * (uint16_t)subdiv);
-  interval = new_interval;
-  half_interval = new_interval / 2;
-  return interval;
+inline void update_interval() {
+  interval = (pdmspi.sampleRate * 60.0) / (bpm * subdiv);
+  half_interval = interval / 2;
 }
 
 void stop_metronome() {
@@ -153,10 +151,10 @@ void start_metronome() {
   metronome_playing = true;
   if (precount_enabled) {
     precount = meas_len + 1;
-    clicks[0] = frames - get_interval() * subdiv + SPEAKER_RAMP_UP;
+    clicks[0] = (frames - interval * subdiv) + SPEAKER_RAMP_UP;
     indices[0] = pattern_length - subdiv;
   } else {
-    clicks[0] = frames - get_interval() + SPEAKER_RAMP_UP;
+    clicks[0] = (frames - interval) + SPEAKER_RAMP_UP;
     indices[0] = pattern_length - 1;
   }
   arcada.pixels.setPixelColor(4, 0, 16, 0);
@@ -178,6 +176,15 @@ bool chance_play(index_t i) {
 }
 
 void metronome() {
+  static uint16_t old_bpm = bpm;
+  static byte old_subdiv = subdiv;
+
+  if (old_bpm != bpm || old_subdiv != subdiv) {
+    update_interval();
+    old_bpm = bpm;
+    old_subdiv = subdiv;
+  }
+  
   if (!clicks[CLICKS_BUF_LEN - 1] && metronome_playing) {
     index_t next_i_maybe;
     nframes_t next_click_maybe;
@@ -189,10 +196,10 @@ void metronome() {
     if (precount) { // count in
       if (precount == 1) {
 	check_i = next_i_maybe = 0;
-	next_click_maybe = prev_click + get_interval() * subdiv;
+	next_click_maybe = prev_click + interval * subdiv;
 	while(!pattern[next_i_maybe]) {
 	  next_i_maybe = (next_i_maybe + 1) % pattern_length;
-	  next_click_maybe += get_interval();
+	  next_click_maybe += interval;
 	  if (next_i_maybe == check_i) { // empty pattern
 	    precount--;
 	    return;
@@ -201,15 +208,15 @@ void metronome() {
 	clicks[CLICKS_BUF_LEN - 1] = next_click_maybe;
 	indices[CLICKS_BUF_LEN - 1] = next_i_maybe;
       } else {
-	clicks[CLICKS_BUF_LEN - 1] = prev_click + get_interval() * subdiv;
+	clicks[CLICKS_BUF_LEN - 1] = prev_click + interval * subdiv;
 	indices[CLICKS_BUF_LEN - 1] = pattern_length - (precount - 1) * subdiv;
       }
       precount--;
     } else { // play the pattern
       check_i = next_i_maybe = (prev_i + 1) % pattern_length;
-      next_click_maybe = prev_click + get_interval();
+      next_click_maybe = prev_click + interval;
       while(!chance_play(next_i_maybe)) {
-	next_click_maybe += get_interval();
+	next_click_maybe += interval;
 	next_i_maybe = (next_i_maybe + 1) % pattern_length;
 	if (check_i == next_i_maybe) { // empty pattern
 	  return;

@@ -33,6 +33,7 @@ void default_settings() {
   arcada.setBacklight(backlight_level);
   bpm = 120;
   subdiv = 1;
+  update_interval();
   meas_len = 4;
   measures = 1;
   set_pattern_length();
@@ -55,6 +56,7 @@ void load_settings() {
     backlight_level = file.read();
     file.read(&bpm, sizeof(uint16_t));
     subdiv = file.read();
+    update_interval();
     meas_len = file.read();
     measures = file.read();
     set_pattern_length();
