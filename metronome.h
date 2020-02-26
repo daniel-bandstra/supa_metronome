@@ -41,12 +41,6 @@ bool metronome_playing = false;
 
 // CLICK
 
-void clear_clicks() {
-  for (index_t i = 0; i < CLICKS_BUF_LEN; i++) {
-    clicks[i] = 0;
-  }
-}
-
 void erase_click_by_index(index_t index) {
   for (index_t i = 1; i < CLICKS_BUF_LEN; i++)
     if (indices[i] == index)
@@ -140,7 +134,8 @@ inline void update_interval() {
 }
 
 void stop_metronome() {
-  clear_clicks();
+  for (index_t i = 0; i < CLICKS_BUF_LEN; i++) // clear all clicks
+    clicks[i] = 0;
   metronome_playing = false;
   arcada.pixels.setPixelColor(0, 0, 0, 0);
   arcada.pixels.setPixelColor(4, 16, 16, 0);
@@ -181,6 +176,8 @@ void metronome() {
 
   if (old_bpm != bpm || old_subdiv != subdiv) {
     update_interval();
+    for (index_t i = 1; i < CLICKS_BUF_LEN; i++) // clear all future clicks
+      clicks[i] = clicks[i] >= frames ? 0 : clicks[i];
     old_bpm = bpm;
     old_subdiv = subdiv;
   }
