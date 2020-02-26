@@ -195,6 +195,7 @@ uint8_t edit_pattern(bool *first_run, bool *update) {
     break;
   case ARCADA_BUTTONMASK_DOWN:
     if (!editing) {
+      select = select >= pattern_length ? pattern_length - 1 : select;
       editing = true;
     }
     break;
