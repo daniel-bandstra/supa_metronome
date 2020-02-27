@@ -54,7 +54,7 @@ void loop() {
     break;
   case 3: // chance
     if (first_run)
-      enable_pixels();
+      enable_pixels(metronome_playing);
     action = adjust_int("chance", &chance, 128, 0, ARCADA_WHITE, ARCADA_RED, &first_run, &update);
     break;
   case 4: // listening -- mic gain
@@ -81,7 +81,7 @@ void loop() {
     break;
   case 7: // brightness
     if (first_run)
-      enable_pixels();
+      enable_pixels(metronome_playing);
     action = adjust_int("backlight", &backlight_level, 255, 1, ARCADA_BLACK, ARCADA_WHITE, &first_run, &update);
     if (update)
       arcada.setBacklight(backlight_level);

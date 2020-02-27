@@ -34,9 +34,13 @@ void update_pixels() {
   }
 }
 
-void enable_pixels() {
+void enable_pixels(bool metronome_playing) {
   analogWrite(13, 0);
   pixels_on = true;
+  if (metronome_playing)
+    arcada.pixels.setPixelColor(4, 0, 16, 0);
+  else
+    arcada.pixels.setPixelColor(4, 16, 16, 0);
   update_pixels();
 }
 
