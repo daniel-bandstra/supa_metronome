@@ -16,6 +16,7 @@ uint8_t tap_tempo(const uint16_t fg, const uint16_t bg,
   case 1:
     break;
   default:
+    *first_run = true;
     return 0;
     break;
   }
