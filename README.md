@@ -13,7 +13,7 @@ The Start Button starts and stops the metronome. The Left and Right buttons navi
 Use the Up/Down keys to adjust this from 1 to 300 bpm. Use the Select key for Tap tempo. This is a literal tap-tempo feature. It uses the built-in accelerometer to sense physical taps to the EdgeBadge and sets the BPM accordingly.
 
 ### edit pattern
-Press the Down button to start editing, navigate with the Left/Right buttons, press A to toggle a beat. Press Up when done.
+Press the Down button to start editing, navigate with the Left/Right buttons, press A to toggle a beat. Press Up when done. The Select key brings up a menu to either reset the pattern (make it so there's one click per beat) or clear it.
 
 ### count in
 Toggles whether a measure of quarter notes is played before your pattern.
