@@ -179,7 +179,7 @@ uint8_t edit_pattern(bool *first_run, bool *update) {
     *first_run = false;
   }
   
-  uint8_t pressed_buttons = action_button(arcada.readButtons());
+  uint8_t pressed_buttons = action_button();
   
   if (left < LEFT_EDGE) {
     x += LEFT_EDGE - left;

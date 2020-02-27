@@ -90,10 +90,10 @@ uint8_t tap_tempo(const uint16_t fg, const uint16_t bg,
       new_tap = false;
     }
     
-    if (buttons = arcada.readButtons()) {
+    if (buttons = action_button()) {
       arcada.accel->setClick(0, TAP_THRESH);
       *first_run = true;
-      return action_button(buttons);
+      return buttons;
     }
   }
 }

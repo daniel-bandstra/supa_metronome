@@ -5,6 +5,7 @@ Adafruit_Arcada arcada;
 #include "audio.h"
 #include "display.h"
 #include "screensaver.h"
+#include "action_button.h"
 #include "random.h"
 #include "metronome.h"
 #include "adjust.h"
