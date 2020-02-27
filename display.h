@@ -35,6 +35,7 @@ void update_pixels() {
 }
 
 void enable_pixels() {
+  analogWrite(13, 0);
   pixels_on = true;
   update_pixels();
 }

@@ -66,8 +66,6 @@ void loop() {
       pdmspi.setMicGain(volume_to_gain(mic_volume));
     break;
   case 5: // listening -- threshold
-    if (first_run)
-      disable_pixels();
     action = adjust_int("gain thresh", &pct_on_threshold, 255, 0, ARCADA_BLACK, ARCADA_YELLOW, &first_run, &update);
     listen(&first_run);
     break;
