@@ -4,10 +4,11 @@ Adafruit_Arcada arcada;
 
 #include "audio.h"
 #include "display.h"
+#include "screensaver.h"
 #include "random.h"
 #include "metronome.h"
-#include "screensaver.h"
 #include "adjust.h"
+#include "tap.h"
 #include "edit_pattern.h"
 #include "listen.h"
 #include "settings.h"
@@ -42,6 +43,8 @@ void loop() {
   switch (screen_select) {
   case 0: // bpm
     action = adjust_int("bpm", &bpm, 300, 1, ARCADA_WHITE, ARCADA_BLUE, &first_run, &update);
+    if (action & ARCADA_BUTTONMASK_SELECT)
+      tap_tempo(ARCADA_WHITE, ARCADA_BLUE, &first_run, &update);
     break;
   case 1: // pattern
     action = edit_pattern(&first_run, &update);
