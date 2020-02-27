@@ -46,27 +46,15 @@ void loop() {
   case 1: // pattern
     action = edit_pattern(&first_run, &update);
     break;
-  case 2: // subdiv
-    action = adjust_int("subdivisions", &subdiv, SUBDIV_MAX, SUBDIV_MIN, ARCADA_WHITE, ARCADA_PURPLE, &first_run, &update);
-    if (update) set_pattern_length();
+  case 2: // precount
+    action = toggle_precount(ARCADA_WHITE, ARCADA_PURPLE, &first_run, &update);
     break;
-  case 3: // meas_len
-    action = adjust_int("measure length", &meas_len, MEAS_LEN_MAX, MEAS_LEN_MIN, ARCADA_WHITE, ARCADA_PURPLE, &first_run, &update);
-    if (update) set_pattern_length();
-    break;
-  case 4: // measures
-    action = adjust_int("measures", &measures, MEASURES_MAX, MEASURES_MIN, ARCADA_WHITE, ARCADA_PURPLE, &first_run, &update);
-    if (update) set_pattern_length();
-    break;
-  case 5: // precount
-    action = toggle_precount(ARCADA_WHITE, ARCADA_RED, &first_run, &update);
-    break;
-  case 6: // chance
+  case 3: // chance
     if (first_run)
       enable_pixels();
-    action = adjust_int("chance", &chance, 128, 0, ARCADA_WHITE, ARCADA_ORANGE, &first_run, &update);
+    action = adjust_int("chance", &chance, 128, 0, ARCADA_WHITE, ARCADA_RED, &first_run, &update);
     break;
-  case 7: // listening -- mic gain
+  case 4: // listening -- mic gain
     if (first_run)
       disable_pixels();
     action = adjust_int("mic gain", &mic_volume, 200, 1, ARCADA_BLACK, ARCADA_YELLOW, &first_run, &update);
@@ -74,13 +62,13 @@ void loop() {
     if (update)
       pdmspi.setMicGain(volume_to_gain(mic_volume));
     break;
-  case 8: // listening -- threshold
+  case 5: // listening -- threshold
     if (first_run)
       disable_pixels();
     action = adjust_int("gain thresh", &pct_on_threshold, 255, 0, ARCADA_BLACK, ARCADA_YELLOW, &first_run, &update);
     listen(&first_run);
     break;
-  case 9: // listening -- calibrate acoustic delay
+  case 6: // listening -- calibrate acoustic delay
     if (first_run)
       disable_pixels();
     action = adjust_int("acoustic delay", &acoustic_delay, 500, -500, ARCADA_BLACK, ARCADA_YELLOW, &first_run, &update);
@@ -90,19 +78,32 @@ void loop() {
     }
     calibrate(&first_run, &update);
     break;
-  case 10: // brightness
+  case 7: // brightness
     if (first_run)
       enable_pixels();
     action = adjust_int("backlight", &backlight_level, 255, 1, ARCADA_BLACK, ARCADA_WHITE, &first_run, &update);
     if (update)
       arcada.setBacklight(backlight_level);
     break;
-  case 11: // volume
+  case 8: // volume
     if (first_run)
       value = gain_to_volume(output_gain);
-    action = adjust_int("volume", &value, 112, 0, ARCADA_WHITE, ARCADA_GREEN, &first_run, &update);
+    action = adjust_int("volume", &value, 112, 0, ARCADA_BLACK, ARCADA_ORANGE, &first_run, &update);
     if (update)
       output_gain = volume_to_gain(value);
+    break;
+  case 9: // subdiv
+    action = adjust_int("subdivisions", &subdiv, SUBDIV_MAX, SUBDIV_MIN, ARCADA_WHITE, ARCADA_DARKGREEN, &first_run, &update);
+    if (update) set_pattern_length();
+    break;
+  case 10: // meas_len
+    action = adjust_int("measure length", &meas_len, MEAS_LEN_MAX, MEAS_LEN_MIN, ARCADA_WHITE, ARCADA_DARKGREEN, &first_run, &update);
+    if (update) set_pattern_length();
+    break;
+  case 11: // measures
+    action = adjust_int("measures", &measures, MEASURES_MAX, MEASURES_MIN, ARCADA_WHITE, ARCADA_DARKGREEN, &first_run, &update);
+    if (update) set_pattern_length();
+    break;
   default:
     break;
   }
