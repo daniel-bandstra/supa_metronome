@@ -34,14 +34,14 @@ void redraw_pattern(int16_t pos_x, int16_t pos_y,
   static int16_t last_pos_x = pos_x;
   static int16_t last_pos_y = pos_y;
   static int16_t last_select = select;
-  static index_t last_current_i = current_i;
+  static index_t last_pattern_i = pattern_i;
   static bool last_metronome_playing = metronome_playing;
   
   if (!first_run &&
       last_pos_x == pos_x &&
       last_pos_y == pos_y &&
       last_select == select &&
-      ((last_current_i == current_i) || !metronome_playing) &&
+      ((last_pattern_i == pattern_i) || !metronome_playing) &&
       last_metronome_playing == metronome_playing &&
       !pattern_changed)
     return;
@@ -51,7 +51,7 @@ void redraw_pattern(int16_t pos_x, int16_t pos_y,
   last_pos_x = pos_x;
   last_pos_y = pos_y;
   last_select = select;
-  last_current_i = current_i;
+  last_pattern_i = pattern_i;
   last_metronome_playing = metronome_playing;
   pattern_changed = false;
   
@@ -66,7 +66,7 @@ void redraw_pattern(int16_t pos_x, int16_t pos_y,
   arcada.display->fillRect(x, box_top, width, BOX_SIDE, BOX_FILL);
   // playing cursor fill
   if (metronome_playing) {
-    uint16_t play_offset = 1 + current_i * (BOX_SIDE - 1) + current_i / subdiv;
+    uint16_t play_offset = 1 + last_pattern_i * (BOX_SIDE - 1) + last_pattern_i / subdiv;
     arcada.display->fillRect(x + play_offset, box_top, BOX_SIDE, BOX_SIDE, BOX_PLAY);
     *left = x + play_offset;
     *right = *left + BOX_SIDE;

@@ -48,7 +48,7 @@ void listen(bool *first_run) {
     if (metronome_playing) {
       keep_screen_on();
 
-      nframes_t offset = (last_onset - current_tick) - acoustic_delay;
+      nframes_t offset = (last_onset - ticks[0]) - acoustic_delay;
       
       if (offset > half_interval)
 	offset -= interval;
@@ -112,7 +112,7 @@ void calibrate(bool *first_run, bool *update) {
       if (metronome_playing) {
 	keep_screen_on();
 
-	nframes_t offset = last_onset - current_tick;
+	nframes_t offset = last_onset - ticks[0];
       
 	if (offset > half_interval)
 	  offset -= interval;
@@ -130,7 +130,7 @@ void calibrate(bool *first_run, bool *update) {
     } else if (metronome_playing) {
       keep_screen_on();
 
-      nframes_t offset = (last_onset - current_tick) - acoustic_delay;
+      nframes_t offset = (last_onset - ticks[0]) - acoustic_delay;
       
       if (offset > half_interval)
 	offset -= interval;
